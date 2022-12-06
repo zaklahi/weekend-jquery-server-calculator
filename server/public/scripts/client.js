@@ -1,3 +1,5 @@
+
+
 $(document).ready(onReady);
 
 
@@ -7,6 +9,7 @@ function onReady() {
    $('#minus-btn').on('click', subtract)
    $('#multiply-btn').on('click', multiply)
    $('#divide-btn').on('click', divide)
+   appendToDom()
    console.log('ready') 
     
     
@@ -80,7 +83,7 @@ function multiply(){
 
 
 function appendToDom(){
-    $('#operations-list').empyty(
-        $('#operations-list').append('${answer}')
-    )
+    $('#operations-list').empyty()
+       $('#operations-list').append
+    
 }

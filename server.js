@@ -50,6 +50,6 @@ app.post('/calculator', function(req,res) {
 
         answer = Number(req.body.firstNum) / Number(req.body.secondNum)
     }
-answer = req.body.answer;
-operations.push(req.body)
+answer = req.body;
+operations.push(answer)
     }
