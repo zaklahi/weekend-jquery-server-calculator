@@ -18,38 +18,55 @@ app.listen(PORT, () => {
 let operations = []
 
 
-app.get('/numbers', function(req, res) {
-    console.log("request for /quotes was made");
-    res.send(operations.calculateIt)
-});
 
-app.post('/calculator', function(req,res) {
-    console.log("in the post request", req.body)
-    //quoteList.push(req.body)
-   // let item = req.body
-    res.sendStatus(201)
-    calculateIt();
-})
 
-    function calculateIt(){
+// app.post('/numbers', function(req,res) {
+//     console.log("in the post request", req.body)
+//     //quoteList.push(req.body)
+//    // let item = req.body
+//     res.sendStatus(200)
+//     calculateIt();
+// })
+let answer;
+function calculateIt() {
+    answer = req.body;
+    if (req.body.operator === "+") {
+        console.log(req.body)
+
+        answer = Number(req.body.firstNum) + Number(req.body.secondNum)
+    } else if (req.body.operator === "-") {
         
-     if (req.body.operator === "+"){
-            console.log(req.body)
 
-            req.body.answer = Number(req.body.firstNum) + Number(req.body.secondNum)
-    } else if (req.body.operator === "-"){
-            console.log(req.body)
+        answer = Number(req.body.firstNum) - Number(req.body.secondNum)
+    } else if (req.body.operator === "*") {
+        
 
-            req.body.answer = Number(req.body.firstNum) - Number(req.body.secondNum)
-    }else if (req.body.operator === "*"){
-        console.log(req.body)
-
-    answer = Number(req.body.firstNum) * Number(req.body.secondNum)
-    }else if (req.body.operator === "/"){
-        console.log(req.body)
+        answer = Number(req.body.firstNum) * Number(req.body.secondNum)
+    } else if (req.body.operator === "/") {
+        
 
         answer = Number(req.body.firstNum) / Number(req.body.secondNum)
     }
-answer = req.body;
-operations.push(answer)
-    }
+    //  answer = req.body;
+   // operations.push(answer)
+}
+
+
+
+app.get('/numbers', function (req, res) {
+    console.log("request for /quotes was made");
+    res.send(answer)
+});
+
+
+
+
+
+
+app.post('/numbers', function (req, res) {
+    console.log("in the post request", req.body)
+    //quoteList.push(req.body)
+    // let item = req.body
+    res.sendStatus(200)
+    calculateIt
+})

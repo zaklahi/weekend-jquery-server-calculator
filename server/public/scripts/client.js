@@ -3,87 +3,118 @@
 $(document).ready(onReady);
 
 
-let operator;
+
 function onReady() {
-   $('#add-btn').on('click', add) 
-   $('#minus-btn').on('click', subtract)
-   $('#multiply-btn').on('click', multiply)
-   $('#divide-btn').on('click', divide)
-   appendToDom()
-   console.log('ready') 
-    
-    
-   
+    getNumber();
+    $('#equal-btn').on('click', calculate)
+    $('.operator').on('click', handleOperator)
+    appendToDom;
+    $('#clear-btn').on('click',clearInputs )
+    //console.log('ready') 
+}
+
+
+let operator;
+function handleOperator() {
+    operator = $(this).text();
+    console.log(operator);
+
+
 }
 // When the submit (`=` button) is clicked, capture this input, bundle it up in an object, and send this object to the server via a POST.
-function calculate(){
+function calculate() {
     console.log('its working')
-    let userInput = {
-        firstNum: Number($('#first-input').val()),
-        secondNum: Number($('#second-input').val()),
-        operator: operator,
-    }
-    $.ajax ({
-        method: 'POST',
-        url:  '/numbers',
-        data: userInput,
-    }).then(function(response) {
-        console.log('this is the respoonse', response)
-        getNumber();
-        
-    } 
 
-)}
+        let firstNum = Number($('#first-input').val())
+        let  secondNum = Number($('#second-input').val())
+       
 
-function getNumber(){
- 
+        $.ajax({
+            method: 'POST',
+            url: '/numbers',
+            data: {
+                firstNum: firstNum,
+                secondNum: secondNum,
+                operator: operator
+
+            }
+        }).then(function (response) {
+            console.log('this is the respoonse', response)
+            getNumber();
+            console.log(response)
+        }
+
+        )
+}
+
+function getNumber() {
+
     $.ajax({
         method: 'GET',
         url: '/numbers',
-    
-      }).then(function(response){
-        console.log('This is the response from the server for /numbers',response);
-        
-      }).catch(function(response){
+
+    }).then(function (response) {
+        console.log('This is the response from the server for /numbers', response);
+
+    }).catch(function (response) {
         console.log(response);
-      })
+        appendToDom(response)
+    })
 }
-    
-   
 
 
 
+function appendToDom(array) {
+    console.log(array);
+    $('#history').empty();
+    for (let calc of array) {
+        $('#history').append(` 
+        <li> "${calc.firstNum}" "${calc.secondNum}" = ${calc.answer}</li>
+
+        `)
+
+    }
+
+}
 
 
-
-
+function clearInputs(){
+    console.log('clear');
+    $('#first-input').val('');
+    $('#second-input').val('');
+}
 
 
 
 // Addition function
-function add(){
-let operatorAdd = '+';
-operator = operatorAdd;
-}
+// function add(){
+// let operatorAdd = '+';
+// operator = operatorAdd;
+// }
 
-function subtract(){
-    let operatorMinus = '-';
-    operator = operatorMinus;
-    }
+// function subtract(){
+//     let operatorMinus = '-';
+//     operator = operatorMinus;
+//     }
 
-function multiply(){
-    let operatorMultiply = '+';
-    operator = operatorMultiply;
-     }
+// function multiply(){
+//     let operatorMultiply = '+';
+//     operator = operatorMultiply;
+//      }
 
-     function divide(){
-        let operatorMultiply = '/';
-        operator = operatorMultiply;
-         }
+//      function divide(){
+//         let operatorMultiply = '/';
+//         operator = operatorMultiply;
+//          }
 
 
-function appendToDom(){
-    $('#operations-list').empyty()
-       $('#operations-list').append
-    
-}
+// function appendToDom(array){
+//     $('#operations-list').empyty();
+//        //$('#operations-list').append
+//     for(let userInput of array){
+//        // $('#operations-list').empyty()
+//     $('#operations-list').append(`
+//     `)
+//     }
+
+// }
